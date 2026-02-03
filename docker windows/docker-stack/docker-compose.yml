@@ -1,6 +1,27 @@
 version: '3.8'
 
 services:
+  metabase:
+    image: metabase/metabase:latest
+    container_name: metabase
+    ports:
+      - "3000:3000"
+    environment:
+      - MB_DB_TYPE=postgres
+      - MB_DB_DBNAME=ecommerce_db
+      - MB_DB_PORT=5432
+      - MB_DB_USER=admin
+      - MB_DB_PASS=admin_password
+      - MB_DB_HOST=db
+    volumes:
+      - metabase_data:/metabase-data
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+volumes:
+  metabase_data:
   # ===========================================
   # REVERSE PROXY - Point d'entrée unique
   # ===========================================
