@@ -1,6 +1,9 @@
 version: '3.8'
 
 services:
+  # ===========================================
+  # METABASE - Business Intelligence
+  # ===========================================
   metabase:
     image: metabase/metabase:latest
     container_name: metabase
@@ -8,20 +11,19 @@ services:
       - "3000:3000"
     environment:
       - MB_DB_TYPE=postgres
-      - MB_DB_DBNAME=ecommerce_db
+      - MB_DB_DBNAME=${POSTGRES_DB:-app_database}
       - MB_DB_PORT=5432
-      - MB_DB_USER=admin
-      - MB_DB_PASS=admin_password
-      - MB_DB_HOST=db
+      - MB_DB_USER=${POSTGRES_USER:-admin}
+      - MB_DB_PASS=${POSTGRES_PASSWORD:-secretpassword}
+      - MB_DB_HOST=postgres  # Doit matcher le nom du service en bas
     volumes:
       - metabase_data:/metabase-data
     depends_on:
-      - db
+      - postgres
     networks:
-      - app-network
+      - backend  # Doit être sur le même réseau que la BDD
+    restart: unless-stopped
 
-volumes:
-  metabase_data:
   # ===========================================
   # REVERSE PROXY - Point d'entrée unique
   # ===========================================
@@ -108,3 +110,5 @@ networks:
 volumes:
   postgres_data:
     name: postgres-data
+  metabase_data:
+    name: metabase-data
