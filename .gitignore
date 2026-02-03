@@ -1,0 +1,10 @@
+# --- SÉCURITÉ ---
+# Ne jamais push les secrets (mots de passe, clés API)
+docker windows/docker-stack/.env
+
+# --- DONNÉES ---
+# On évite de stocker les données brutes sur GitHub (souvent trop lourdes)
+docker windows/docker-stack/csv_data/
+*.csv
+*.json
+*.log

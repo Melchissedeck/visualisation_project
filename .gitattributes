@@ -1,0 +1,12 @@
+# Force le format LF (Linux) pour tous les fichiers par défaut
+* text=auto eol=lf
+
+# Force spécifiquement LF pour les scripts shell et Docker
+*.sh text eol=lf
+*.sql text eol=lf
+docker-compose.yml text eol=lf
+.env text eol=lf
+
+# Laisse les fichiers binaires (images, etc.) tranquilles
+*.png binary
+*.jpg binary
